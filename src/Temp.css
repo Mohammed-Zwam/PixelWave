@@ -1,0 +1,158 @@
+
+main.home-page section .box {
+    border: 3px solid #eee;
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    /* z-index: 1; */
+    transform: scale(0) translateY(0) rotate(0);
+    animation: animationBackground 5s linear infinite;
+}
+
+main.home-page section .box:nth-child(1) {
+    left: 18%;
+    top: 5%;
+    width: 75px;
+    height: 75px;
+}
+
+main.home-page section .box:nth-child(2) {
+    left: 80%;
+    top: 5%;
+}
+
+main.home-page section .box:nth-child(3) {
+    left: 5%;
+    top: 28%;
+    width: 80px;
+    height: 80px;
+}
+
+main.home-page section .box:nth-child(4) {
+    left: 95%;
+    top: 80%;
+}
+
+main.home-page section .box:nth-child(5) {
+    left: 5%;
+    top: 75%;
+    width: 75px;
+    height: 75px;
+}
+
+main.home-page section .box:nth-child(6) {
+    left: 90%;
+    top: 20%;
+}
+
+main.home-page section .box:nth-child(7) {
+    left: 32%;
+    top: 82%;
+}
+
+main.home-page section .box:nth-child(8) {
+    left: 85%;
+    top: 60%;
+}
+
+main.home-page section .box:nth-child(9) {
+    left: 14%;
+    top: 55%;
+    width: 60px;
+    height: 60px;
+}
+
+main.home-page section .box:nth-child(10) {
+    left: 40%;
+    top: 50%;
+}
+
+main.home-page section .box:nth-child(11) {
+    left: 40%;
+    top: 4%;
+}
+
+main.home-page section .box:nth-child(12) {
+    left: 18%;
+    top: 99%;
+}
+
+main.home-page section .box:nth-child(13) {
+    left: 83%;
+    top: 95%;
+}
+
+main.home-page section .box:nth-child(14) {
+    left: -2%;
+    top: 50%;
+}
+
+main.home-page section .box:nth-child(15) {
+    left: 72%;
+    top: 22%;
+}
+
+main.home-page section .box:nth-child(16) {
+    left: 60%;
+    top: 50%;
+}
+
+main.home-page section .box:nth-child(17) {
+    left: 5%;
+    top: 2%;
+}
+
+main.home-page section .box:nth-child(18) {
+    left: 98%;
+    top: 44%;
+}
+
+main.home-page section .box:nth-child(19) {
+    left: 49%;
+    top: 40%;
+}
+
+main.home-page section .box:nth-child(20) {
+    left: 70%;
+    top: 85%;
+}
+
+main.home-page section .box:nth-child(21) {
+    left: 29%;
+    top: 20%;
+}
+
+main.home-page section .box:nth-child(22) {
+    left: 99%;
+    top: 0%;
+}
+
+main.home-page section .box:nth-child(23) {
+    left: 47%;
+    top: 95%;
+}
+
+main.home-page section .box:nth-child(24) {
+    left: 60%;
+    top: 12%;
+}
+
+
+main.home-page section .box:nth-child(25) {
+    left: 58%;
+    top: 80%;
+}
+
+
+
+@keyframes animationBackground {
+    from {
+        transform: scale(0) translateY(0) rotate(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1) translateY(-90px) rotate(360deg);
+        opacity: 0;
+    }
+}
