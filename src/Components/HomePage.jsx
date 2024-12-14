@@ -1,39 +1,42 @@
+// HOOKS & CONTEXTS
+import { Link } from "react-router-dom";
+import { useState, useContext, useEffect, useRef } from "react";
+import { LangContext } from "./Contexts/LangContext";
+
+// COMPONENTS
 import LanguageToggle from "./LanguageToggle";
+import MenuBar from './MenuBar';
+
+// ICONS
+import CloseIcon from "@mui/icons-material/Close";
 import MarkunreadOutlinedIcon from "@mui/icons-material/MarkunreadOutlined";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import { LangContext } from "../Contexts/LangContext";
-import MenuBar from './MenuBar';
+
+// STYLES
+import "./HomePageStyles.css";
 
 export default function HomePage() {
-    let floatingElements = [];
-    for (let i = 0; i < 25; i++)
-        floatingElements.push(<div key={i} className="box" style={{ animationDelay: `${i * 0.35}s` }}></div>);
-
     return (
         <main className="home-page">
             <div className="overlay"></div>
             <Header />
             <section>
-                {/* {floatingElements} */}
                 <Link to="/agency">
                     <Department
                         dep="agency"
-                        depImgSrc={require("../Images/agency.png")}
-                        iconSrc={require("../Images/agencyIcon.png")}
+                        depImgSrc={require("./Images/agency.png")}
+                        iconSrc={require("./Images/agencyIcon.png")}
                     />
                 </Link>
                 <Link to="/academy">
                     <Department
                         dep="academy"
-                        depImgSrc={require("../Images/academy.png")}
-                        iconSrc={require("../Images/academyIcon.png")}
+                        depImgSrc={require("./Images/academy.png")}
+                        iconSrc={require("./Images/academyIcon.png")}
                     />
                 </Link>
             </section>
@@ -49,8 +52,10 @@ function Header() {
     let language = useContext(LangContext);
     return (
         <header>
-            <LanguageToggle />
-            <MenuBar />
+            <div className="menu-bar">
+                <MenuBar />
+            </div>
+            <img className="logo" src={require("./Images/logo-col2.png")} alt="logo" />
             <nav>
                 <ul>
                     <li
@@ -61,7 +66,7 @@ function Header() {
                     >
                         {language.lang === "en" ? "About Us" : "نبذة عنّا"}
                     </li>
-                    {/* <li>|</li> */}
+                    <li>|</li>
                     <li
                         className="nav-link hover-element"
                         onClick={() => {
@@ -70,7 +75,7 @@ function Header() {
                     >
                         {language.lang === "en" ? "News" : "الأخبار"}
                     </li>
-                    {/* <li>|</li> */}
+                    <li>|</li>
                     <li
                         className="nav-link hover-element"
                         onClick={() => {
@@ -82,6 +87,7 @@ function Header() {
                     </li>
                 </ul>
             </nav>
+            <LanguageToggle />
             {/* <ThemeToggle /> */}
             <Collapse show={aboutClicked} setShow={setAboutClicked} />
             <Collapse show={newsClicked} setShow={setNewsClicked} />
@@ -99,33 +105,33 @@ function Footer() {
             <nav>
                 <ul>
                     <li>
-                        <a  href="mailto:mohammed.ashraf.zwam@gmail.com">
-                            <MarkunreadOutlinedIcon className="hover-element"/>
+                        <a href="mailto:mohammed.ashraf.zwam@gmail.com">
+                            <MarkunreadOutlinedIcon className="hover-element" />
                         </a>
                     </li>
                     <li>
                         <a href="tel:01115793826">
-                            <LocalPhoneIcon className="hover-element"/>
+                            <LocalPhoneIcon className="hover-element" />
                         </a>
                     </li>
                     <li>
                         <a href="https://www.linkedin.com/in/mohammed-ashraf-2992512a7/">
-                            <LinkedInIcon className="hover-element"/>
+                            <LinkedInIcon className="hover-element" />
                         </a>
                     </li>
                     <li>
                         <a href="https://www.facebook.com/profile.php?id=100084698750118">
-                            <FacebookIcon className="hover-element"/>
+                            <FacebookIcon className="hover-element" />
                         </a>
                     </li>
                     <li>
                         <a href="https://wa.me/+201115793826">
-                            <WhatsAppIcon className="hover-element"/>
+                            <WhatsAppIcon className="hover-element" />
                         </a>
                     </li>
                     <li>
                         <a href="https://www.instagram.com/mohammed0__0zwam/">
-                            <InstagramIcon className="hover-element"/>
+                            <InstagramIcon className="hover-element" />
                         </a>
                     </li>
                 </ul>
@@ -137,53 +143,69 @@ function Footer() {
                         ` All Rights Reserved | PixelWave Group` :
                         ` PixelWave Group | كل الحقوق محفوظة لدَى `
                 }
-
             </p>
         </footer>
     );
 }
 
 function Department({ dep, depImgSrc, iconSrc }) {
+    const containerRef = useRef();
     const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
-            const icons = document.querySelectorAll(`.${dep} img`);
-            icons.forEach((icon) => {
-                const speed = 4;
+        function parallax(e) {
+            if (!isHovered || !containerRef.current) return;
+
+            containerRef.current.querySelectorAll(".shape").forEach((shape) => {
+                const speed = parseFloat(shape.getAttribute("data-speed")) || 0;
                 const x = (window.innerWidth - e.pageX * speed) / 100;
                 const y = (window.innerHeight - e.pageY * speed) / 100;
-                icon.style.transform = `translateX(${x}px) translateY(${y}px)`;
-            });
-        };
-
-        if (isHovered) {
-            window.addEventListener('mousemove', handleMouseMove);
-        } else {
-            window.removeEventListener('mousemove', handleMouseMove);
-            const icons = document.querySelectorAll(`.${dep} img`);
-            icons.forEach((icon) => {
-                icon.style.transform = 'translateX(0px) translateY(0px)';
+                shape.style.transform = `translateX(${x}px) translateY(${y}px)`;
             });
         }
 
+        document.addEventListener("mousemove", parallax);
+
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener("mousemove", parallax);
         };
-    }, [dep, isHovered]);
+    }, [isHovered]);
+
+    const shapes = [
+        { src: "./Images/Shapes/1.png", speed: -5 },
+        { src: "./Images/Shapes/3.png", speed: 5 },
+        { src: "./Images/Shapes/2.png", speed: 2 },
+        { src: "./Images/Shapes/4.png", speed: -2 },
+        { src: "./Images/Shapes/5.png", speed: -4 },
+        { src: "./Images/Shapes/6.png", speed: 9 },
+        { src: "./Images/Shapes/7.png", speed: 6 },
+        { src: "./Images/Shapes/8.png", speed: 3 },
+        { src: "./Images/Shapes/9.png", speed: -2 },
+        { src: "./Images/Shapes/10.png", speed: 5 },
+        { src: "./Images/Shapes/11.png", speed: 7 },
+        { src: "./Images/Shapes/12.png", speed: -3 },
+        { src: "./Images/Shapes/7.png", speed: 5 },
+        { src: "./Images/Shapes/3.png", speed: 7 },
+        { src: "./Images/Shapes/10.png", speed: -3 },
+    ];
 
     return (
         <div
+            ref={containerRef}
             className={`${dep} dep-container hover-element`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <img src={depImgSrc} alt="" className="hover-element" />
+            {shapes.map((shape, index) => (
+                <div key={index} className="shape" data-speed={shape.speed}>
+                    <img src={require(`${shape.src}`)} alt={`Shape ${index + 1}`} />
+                </div>
+            ))}
+            <img src={depImgSrc} alt="" className="dep-title-img hover-element" />
             <img src={iconSrc} alt="" className="dep-icon hover-element" />
         </div>
     );
 }
-
 
 function Collapse({ show, setShow }) {
     return (
@@ -197,7 +219,7 @@ function Collapse({ show, setShow }) {
                     setShow(false);
                 }}
             >
-                <CloseIcon />
+                <CloseIcon className="hover-element" />
             </div>
             <p>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.

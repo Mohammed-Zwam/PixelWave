@@ -1,8 +1,10 @@
-import "./App.css";
+import "./Global.css";
+
 import HomePage from "./Components/HomePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LangContext } from "./Contexts/LangContext";
+import { LangContext } from "./Components/Contexts/LangContext";
 import { useEffect, useState } from "react";
+import Agency from './Components/AgencyComponents/AgencyPage';
 
 function App() {
     let [lang, setLang] = useState('en');
@@ -31,6 +33,7 @@ function App() {
         };
 
         window.addEventListener("mousemove", moveCursor);
+        window.addEventListener("click", moveCursor);
         window.addEventListener("mouseover", handleHover);
         window.addEventListener("mouseout", resetHover);
 
@@ -42,19 +45,19 @@ function App() {
     }, []);
 
     return (
-        <LangContext.Provider value={{ lang: lang, setLang: setLang }}>
-            <div className="App">
-                <BrowserRouter>
+        <div className="App">
+            <BrowserRouter>
+                <LangContext.Provider value={{ lang: lang, setLang: setLang }}>
                     <Routes>
                         <Route path="/" element={<HomePage />} />
-                        <Route path="academy" element={<h1>Academy</h1>} />
-                        <Route path="agency" element={<h1>Agency</h1>} />
+                        <Route path="academy" element={<Agency />} />
+                        <Route path="agency" element={<Agency />} />
                     </Routes>
-                </BrowserRouter>
-                <div className="inner-cursor"></div>
-                <div className="outer-cursor"></div>
-            </div>
-        </LangContext.Provider>
+                </LangContext.Provider>
+            </BrowserRouter>
+            <div className="inner-cursor"></div>
+            <div className="outer-cursor"></div>
+        </div >
     );
 }
 

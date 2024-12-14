@@ -1,20 +1,19 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { LangContext } from "../Contexts/LangContext";
+import { LangContext } from "./Contexts/LangContext";
 
 const Switch = () => {
-    let language = useContext(LangContext);
-
+    let languageContext = useContext(LangContext);
     return (
         <div>
             <StyledWrapper>
                 <label htmlFor="filter" className="switch hover-element" aria-label="Toggle Filter">
                     <input
-                        checked={language.lang === "en" ? false : true}
+                        checked={languageContext.lang === "ar" ? true : false}
                         type="checkbox"
                         id="filter"
-                        onChange={() => {
-                            language.setLang(language.lang === "en" ? "ar" : "en");
+                        onChange={(e) => {
+                            languageContext.setLang(e.target.checked ? "ar" : "en");
                         }} />
                     <span>EN</span>
                     <span>AR</span>
@@ -26,6 +25,7 @@ const Switch = () => {
 
 const StyledWrapper = styled.div`
     .switch {
+
         --_switch-bg-clr: #70a9c5;
         --_switch-padding: 4px; /* padding around button*/
         --_slider-bg-clr: rgba(12, 74, 110, 0.65); /* slider color unchecked */
